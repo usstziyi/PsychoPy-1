@@ -46,7 +46,7 @@ subtitle.draw()
 win.flip()
 
 # 5. 显示 2 秒
-core.wait(2.0)
+core.wait(20.0)
 
 # 7. 收尾：关窗 + 退出
 win.close()
