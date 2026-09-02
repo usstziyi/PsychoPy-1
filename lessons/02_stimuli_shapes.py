@@ -48,10 +48,11 @@ line = visual.Line(
     lineWidth=4,
 )
 
-# --- 画一个正三角形（Polygon 需给出顶点）---
-tri = visual.Polygon(
+# --- 画一个正三角形（任意顶点用 ShapeStim；Polygon 只能画正多边形）---
+tri = visual.ShapeStim(
     win,
     vertices=[(-0.1, -0.2), (0.1, -0.2), (0.0, -0.2 + 0.28)],  # 底边+顶点
+    closeShape=True,          # 首尾相连成封闭图形
     lineColor="black",
     fillColor="gold",
     lineWidth=2,
@@ -63,7 +64,7 @@ dot = visual.Circle(
     radius=0.025,
     pos=(0.0, 0.25),
     fillColor="purple",
-    lineWidth=0,          # 不描边，就是纯填充的点
+    lineColor=None,       # 描边设为透明，就是纯填充的点（新版不能 lineWidth=0）
 )
 
 # 把上面所有刺激画到后台缓冲
@@ -79,10 +80,21 @@ core.wait(3.0)
 
 
 # --- 进阶：观察坐标网格（可选：第二段演示）---
-grid_win = visual.Window(size=(400, 400), color="white", units="norm",
-                         fullscr=False)
-cross = visual.TextStim(grid_win, text="+", color="black", height=0.2,
-                        pos=(0, 0))
+grid_win = visual.Window(
+    size=(400, 400), 
+    color="white", 
+    units="norm",
+    fullscr=False
+)
+
+cross = visual.TextStim(
+    grid_win, 
+    text="+", 
+    color="black", 
+    height=0.2, # 文字高度
+    pos=(0, 0)
+)
+
 cross.draw()
 grid_win.flip()
 core.wait(2.0)
