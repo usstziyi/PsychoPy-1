@@ -6,12 +6,12 @@ readme = "README.md"
 authors = [
     { name = "007", email = "007lookworld@gmail.com" }
 ]
-requires-python = ">=3.14"
-dependencies = []
-
-[project.scripts]
-psychopy-1 = "psychopy_1:main"
-
-[build-system]
-requires = ["uv_build>=0.12.7,<0.13.0"]
-build-backend = "uv_build"
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.10.9",
+    "numpy>=2.2.6",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.3",
+    "psychopy>=2026.2.3",
+    "scipy>=1.15.3",
+]
