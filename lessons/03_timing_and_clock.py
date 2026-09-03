@@ -16,6 +16,7 @@ win = visual.Window(
     color="black",
     units="height",
     fullscr=False,
+    monitor="MiMonitor",
 )
 
 # 用一个色块刺激
