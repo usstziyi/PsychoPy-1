@@ -22,7 +22,7 @@ img_stim = visual.ImageStim(
     win,
     image=gradient,          # 直接接受 numpy 数组
     size=(0.6, 0.6),
-    pos=(-0.45, 0.0),
+    pos=(0.0, 0.0),
 )
 img_stim.draw()
 win.flip()
@@ -38,16 +38,18 @@ grating = visual.GratingStim(
     pos=(0.45, 0.0),
     sf=4.0,                 # 空间频率（周期/单位高度）
     phase=0.0,
-    color="grey",
+    # 注意：不要设 color="grey"——grey 在 rgb 色彩空间亮度为 0，
+    # 会让光栅调制幅度归零，与灰色背景融为一体而看不见
 )
 
 # 帧循环：相位递增产生漂移
-n_frames = 120
+n_frames = 900
 for f in range(n_frames):
     grating.phase += 0.1       # 相位随帧更新
     grating.draw()
     win.flip()
 
+core.wait(5)
 win.close()
 
 # ---------- 第三部分：随机纹理（噪声）另一窗口演示 ----------
@@ -55,10 +57,10 @@ win2 = visual.Window(size=(500, 500), color="black", units="norm",
                      fullscr=False)
 rng = np.random.default_rng(0)
 noise = rng.random((128, 128))
-noise_stim = visual.ImageStim(win2, image=noise, size=(1.0, 1.0))
+noise_stim = visual.ImageStim(win2, image=noise, size=(1.0, 1.0)) # 长宽各50%
 noise_stim.draw()
 win2.flip()
-core.wait(1.5)
+core.wait(5)
 
 win2.close()
 core.quit()
