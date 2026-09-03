@@ -21,56 +21,58 @@ from psychopy import sound, visual, core
 win = visual.Window(size=(800, 500), color="black", units="height",
                     fullscr=False, monitor="testMonitor")
 
-# ---------- 1. 播放内置正弦音（440Hz，A音）----------
-beep = sound.Sound(
-    value=440,      # 频率 Hz
-    secs=0.5,       # 时长
-    stereo=True,    # 是否立体声
-)
-beep.play()
-print("播放 440Hz 正弦 0.5s...")
-core.wait(3)
+# # ---------- 1. 播放内置正弦音（440Hz，A音）----------
+# beep = sound.Sound(
+#     value=440,      # 频率 Hz
+#     secs=30,       # 时长
+#     stereo=True,    # 是否立体声
+# )
+# beep.play()
+# print("播放 440Hz 正弦 0.5s...")
+# core.wait(30)
 
-win.close()
-core.quit()
-exit()
-
-
-# ---------- 2. 尝试加载本地 wav（若存在）----------
-wav_path = "test.wav"   # 可自己放一个 test.wav 到当前目录
-if os.path.exists(wav_path):
-    snd = sound.Sound(wav_path)
-    snd.play()
-    core.wait(min(snd.getDuration(), 1.5))
-else:
-    print(f"[信息] 未找到 {wav_path}，跳过文件播放。")
+# win.close()
+# core.quit()
+# exit()
 
 
-# ---------- 3. 视觉 + 音频同步演示 ----------
-msg = visual.TextStim(win, text="", pos=(0, 0.2), color="white", height=0.1)
-tone = sound.Sound(value=880, secs=0.3)     # 更高音，用于提示
+# # ---------- 2. 尝试加载本地 wav（若存在）----------
+# wav_path = "test.wav"   # 可自己放一个 test.wav 到当前目录
+# if os.path.exists(wav_path):
+#     snd = sound.Sound(wav_path)
+#     snd.play()
+#     core.wait(min(snd.getDuration(), 1.5))
+# else:
+#     print(f"[信息] 未找到 {wav_path}，跳过文件播放。")
 
-n_reps = 4
-clock = core.Clock()
-for i in range(n_reps):
-    # 显示文字并同步放一个提示音
-    msg.text = f"第 {i+1}/{n_reps} 次"
-    msg.draw()
-    win.flip()
 
-    tone.play()
-    # 显示一小段时间（配合声音）
-    core.wait(0.7)
+# # ---------- 3. 视觉 + 音频同步演示 ----------
+# msg = visual.TextStim(win, text="", pos=(0, 0.2), color="white", height=0.1)
+# tone = sound.Sound(value=880, secs=0.3)     # 更高音，用于提示
+
+# n_reps = 4
+# clock = core.Clock()
+# for i in range(n_reps):
+#     # 显示文字并同步放一个提示音
+#     msg.text = f"第 {i+1}/{n_reps} 次"
+#     msg.draw()
+#     win.flip()
+
+#     tone.play()
+#     # 显示一小段时间（配合声音）
+#     core.wait(0.7)
 
 # ---------- 4. 用 numpy 自定义波形并播放 ----------
 sr = 44100
 t = np.linspace(0, 0.5, int(sr * 0.5), endpoint=False)
 custom = np.concatenate([np.sin(2*np.pi*523*t), np.sin(2*np.pi*784*t)])  # C→G
 custom_norm = custom / np.max(np.abs(custom))
+# 波形数组必须是二维 (样本数, 声道数)；把单声道复制成双声道
+custom_stereo = np.column_stack([custom_norm, custom_norm])
 
-note = sound.Sound(custom_norm, sampleRate=sr)
+note = sound.Sound(custom_stereo, sampleRate=sr)
 note.play()
-print("播放自定义和弦...")
+print("播放自定义音色...")
 core.wait(1.0)
 
 win.close()
