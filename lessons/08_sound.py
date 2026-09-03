@@ -12,20 +12,28 @@
 """
 import os
 import numpy as np
+from psychopy import prefs
+# 本机安装了 psychtoolbox，PsychoPy 会优先选 PTB 音频引擎，但它无法正常出声；
+# 强制改用 sounddevice 后端（使用 Windows 默认输出设备）。
+prefs.hardware["audioLib"] = "sounddevice"
 from psychopy import sound, visual, core
 
 win = visual.Window(size=(800, 500), color="black", units="height",
-                    fullscr=False)
+                    fullscr=False, monitor="testMonitor")
 
 # ---------- 1. 播放内置正弦音（440Hz，A音）----------
 beep = sound.Sound(
     value=440,      # 频率 Hz
     secs=0.5,       # 时长
-    stereo=True,
+    stereo=True,    # 是否立体声
 )
 beep.play()
 print("播放 440Hz 正弦 0.5s...")
-core.wait(0.6)
+core.wait(3)
+
+win.close()
+core.quit()
+exit()
 
 
 # ---------- 2. 尝试加载本地 wav（若存在）----------
