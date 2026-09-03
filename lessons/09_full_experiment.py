@@ -31,7 +31,7 @@ STIMULI = [
 
 # ================= 1. 窗口 =================
 win = visual.Window(size=(800, 600), color="black", units="height",
-                    fullscr=False)
+                    fullscr=False, monitor="testMonitor")
 
 # ================= 2. 刺激 =================
 fix = visual.TextStim(win, text="+", pos=(0, 0), color="grey", height=0.05)
@@ -83,10 +83,10 @@ for trial in trials:
     start_ts = win.flip()          # flip 返回该帧显示的精确时间
     clock.reset()                  # 重置计时器 → 测量 RT
 
-    # 6.3 采样按键直到正确/超时（最多 2.5s）
+    # 6.3 采样按键直到正确/超时（最多 5s）
     resp = None
     rt = None
-    while clock.getTime() < 2.5:
+    while clock.getTime() < 5:
         # 每帧都要重新绘制刺激，否则下次 flip 画面会变空白
         word_stim.draw()
         keys = event.getKeys(keyList=["f", "j", "escape"])
@@ -111,9 +111,8 @@ for trial in trials:
     trials.addData("resp", resp)
     trials.addData("correct", correct)
     trials.addData("rt", rt)
-    trials.addData("word", trial["word"])
-    trials.addData("print_color", trial["print_color"])
-    trials.addData("congruent", trial["congruent"])
+    # word / print_color / congruent 已在条件列表中，会自动导出，
+    # 不要再用 addData 重复记录（重名列会让 pandas 导出报错）
 
 # ================= 7. 结束与保存 =================
 out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
