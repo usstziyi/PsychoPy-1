@@ -1,0 +1,9 @@
+﻿session,participant,TrialNumber,word,color,ran,order,resp,correct,rt
+1,demo,1,YELLOW,blue,1.0,0.0,j,NA,NA
+1,demo,2,GREEN,red,1.0,1.0,f,NA,NA
+1,demo,3,BLUE,yellow,1.0,2.0,j,NA,NA
+1,demo,4,RED,green,1.0,3.0,f,NA,NA
+1,demo,5,YELLOW,blue,1.0,4.0,j,NA,NA
+1,demo,6,RED,green,1.0,5.0,f,NA,NA
+1,demo,7,BLUE,yellow,1.0,6.0,j,NA,NA
+1,demo,8,GREEN,red,1.0,7.0,f,NA,NA
